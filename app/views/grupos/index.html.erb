@@ -24,7 +24,7 @@
 
       <p class="tags">
       <% grupo.tags.each do |tag| %>
-        <%= tag %>
+        <%= link_to tag.name, { :action => :tag, :id => tag.name }, :class => "tag tags" %> 
       <% end %>
       </p>
 

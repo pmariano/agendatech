@@ -10,6 +10,12 @@ class GruposController < ApplicationController
   def new
     @grupo = Grupo.new
   end
+  
+  def tag
+    @grupos = Grupo.find_tagged_with(params[:id], :order => "nome ASC")
+    @tag = params[:id]
+    render :action => "index"
+  end
 
   def create
     @grupo = Grupo.new(params[:grupo])
