@@ -3,13 +3,12 @@ class EventosController < ApplicationController
 
   def index
     if params[:month]
-      @eventos = Evento.all(:conditions=> ["aprovado = ? AND MONTH(data) = ? ", true,  numero_do_mes(params[:month])], :order => 'data ASC')
-      @mes = params[:month]
+      @eventos = Evento.por_mes(numero_do_mes(params[:month])).top_gadgets
     else
       if params[:estado]
-        @eventos = Evento.estado_aprovado(estados.index(params[:estado]))
+        @eventos = Evento.por_estado(estados.index(params[:estado])).top_gadgets
       else
-        @eventos = Evento.nao_ocorrido
+        @eventos = Evento.que_ainda_vao_rolar
       end
     end
   end
@@ -33,7 +32,8 @@ class EventosController < ApplicationController
   end
 
   def show
-    @evento = Evento.find(params[:id])
+    @evento = Evento.find_by_cached_slug(params[:id])
+    @comentario = Comentario.new
   end
 
   def tag
@@ -42,9 +42,25 @@ class EventosController < ApplicationController
     render :action => "index"
   end
 
-  def twits
-    @evento = Evento.find_by_id(params[:id])
-    render :layout => false
+  def comentar
+    @comentario = Comentario.new(params[:comentario])
+    @comentario.twitter = current_user.nickname
+    if @comentario.save
+      flash[:comentario] = "Comentário cadastrado com sucesso!"      
+      @evento = Evento.find_by_cached_slug(params[:evento_nome])
+      redirect_to evento_path(:ano => @evento.data.year,:id=>@evento)
+    else
+      render :action => "new"
+    end
+  end
+  
+  def lista
+    @participantes = []
+    puts params[:id]
+    evento = Evento.find_by_cached_slug(params[:id])
+    evento.gadgets.each do |g|
+      @participantes << Twitter.user(User.find(g.user_id).nickname).name
+    end
   end
 
 end

@@ -5,20 +5,27 @@
 <% @grupos.each do |grupo| -%>
 
   <div class="evento clearfix" id="<%=grupo.id%>">
-    <div class="logo clearfix">
-      <%= link_to(image_tag(grupo.logo.url(:thumb)), grupo_path(:nome => grupo.nome, :id => grupo)) if grupo.logo? %>
-    </div>
 
+    <% if grupo.logo? %>
+      <div class="logo_img clearfix">
+        <%= link_to(image_tag(grupo.logo.url(:thumb)), grupo_path(:nome => grupo.nome, :id => grupo.to_param))  %>
+      </div>
+    <% else %>
+        <div class="logo">
+          
+        </div>
+    <% end %>
     <div class="info">
       <p id="evento">
-        <%= link_to(h(grupo.nome), grupo_path(:nome => grupo.nome, :id => grupo))  %>
-        <%= link_to grupo.site, grupo.site if grupo.site? %>
+      <%= link_to(h(grupo.nome), grupo_path(:nome => grupo.nome, :id => grupo))  %>
+      <br />
+      <%= link_to "Site do grupo", grupo.site, :class => "site" %>
       </p>
 
       <p class="tags">
-        <% grupo.tags.each do |tag| %>
-          <%= tag %>
-        <% end %>
+      <% grupo.tags.each do |tag| %>
+        <%= tag %>
+      <% end %>
       </p>
 
     </div>

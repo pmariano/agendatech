@@ -1,0 +1,167 @@
+pt:
+  date:
+    formats:
+      # You can provide other formats here if you like!
+      default: "%d/%m/%Y"
+      short: "%d de %b"
+      long: "%d de %B de %Y"
+      month: "%B"
+
+    day_names: [Domingo, Segunda, Terça, Quarta, Quinta, Sexta, Sábado]
+    abbr_day_names: [Dom, Seg, Ter, Qua, Qui, Sex, Sáb]
+    month_names: [~, Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro]
+    abbr_month_names: [~, Jan, Fev, Mar, Abr, Mai, Jun, Jul, Ago, Set, Out, Nov, Dez]
+    order: [ :day, :month, :year ]
+
+  time:
+    formats:
+      default: "%A, %d de %B de %Y às %Hh%Mm%S"
+      short: "%d/%m/%Y - %Hh%M"
+      long: "%A, %d/%m/%Y às %Hh%M"
+      month: "%B"
+    am: ""
+    pm: ""
+    
+    day_names: [Domingo, Segunda, Terça, Quarta, Quinta, Sexta, Sábado]
+    abbr_day_names: [Dom, Seg, Ter, Qua, Qui, Sex, Sáb]
+    month_names: [~, Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro]
+    abbr_month_names: [~, Jan, Fev, Mar, Abr, Mai, Jun, Jul, Ago, Set, Out, Nov, Dez]
+    order: [ :day, :month, :year ]
+
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " e "
+      last_word_connector: " e "
+
+  number:
+    format:
+      separator: "."
+      delimiter: ","
+      precision: 2
+
+    currency:
+      format:
+        format: "%u %n"
+        unit: "R$"
+
+  datetime:
+    distance_in_words:
+      half_a_minute: 'meio minuto'
+      less_than_x_seconds:
+        one: 'menos de 1 segundo'
+        other: 'menos de {{count}} segundos'
+
+      x_seconds:
+        one: '1 segundo'
+        other: '{{count}} segundos'
+
+      less_than_x_minutes:
+        one: 'menos de um minuto'
+        other: 'menos de {{count}} minutos'
+
+      x_minutes:
+        one: '1 minuto'
+        other: '{{count}} minutos'
+
+      about_x_hours:
+        one: 'aproximadamente 1 hora'
+        other: 'aproximadamente {{count}} horas'
+
+      x_days:
+        one: '1 dia'
+        other: '{{count}} dias'
+
+      about_x_months:
+        one: 'aproximadamente 1 mês'
+        other: 'aproximadamente {{count}} meses'
+
+      x_months:
+        one: '1 mês'
+        other: '{{count}} meses'
+
+      about_x_years:
+        one: 'aproximadamente 1 ano'
+        other: 'aproximadamente {{count}} anos'
+
+      over_x_years:
+        one: 'mais de 1 ano'
+        other: 'mais de {{count}} anos'
+
+    prompts:
+      year: "Ano"
+      month: "Mês"
+      day: "Dia"
+      hour: "Hora"
+      minute: "Minuto"
+      second: "Segundos"
+
+  devise:
+    sessions:
+      link: 'Acessar minha conta'
+      signed_in: 'Você acessou o site com sucesso.'
+      signed_out: 'Você saiu com sucesso.'
+      unauthenticated: 'Por favor efetue o login e nós o enviaremos para a página que você solicitou.'
+      unconfirmed: 'Sua conta ainda não foi confirmada.'
+      invalid: 'E-mail e/ou senha não são válidos.'
+      invalid_token: 'Invalid authentication token.'
+      locked: 'Your account is locked.'
+      timeout: 'Sua sessão expirou, por favor acesse novamente.'
+      inactive: 'Seu perfil foi desativado pelo administrador. Favor entrar em contato para reativá-lo.'
+    passwords:
+      link: 'Esqueceu sua senha?'
+      send_instructions: 'Nós enviamos instruções para você atualizar sua senha. Por favor, cheque sua caixa de entrada.'
+      updated: 'Sua senha foi atualizada com sucesso. Você está logado agora.'
+    confirmations:
+      link: "Reenviar instruções de confirmação"
+      send_instructions: 'Nós enviamos instruções para que você possa confirmar a sua conta. Por favor, cheque sua caixa de entrada.'
+      confirmed: 'Sua conta foi confirmada com sucesso. Você está logado agora.'
+    registrations:
+      link: 'Criar uma nova conta'
+      signed_up: 'Sua conta foi criada com sucesso. Um e-mail de confirmação foi enviado, por favor, confira sua caixa de entrada.'
+      updated: 'Sua conta foi atualizada com sucesso.'
+      destroyed: 'Sua conta e todas informações foram deletadas. Esperamos ver você novamente no futuro.'
+    unlocks:
+      link: "Reenviar instruções para desbloqueio"
+      send_instructions: 'You will receive an email with instructions about how to unlock your account in a few minutes.'
+      unlocked: 'Your account was successfully unlocked. You are now signed in.'
+    mailer:
+      confirmation_instructions: 'Código de confirmação'
+      reset_password_instructions: 'Instruções para reiniciar sua senha'
+      unlock_instructions: 'Instruções de desbloqueio'
+
+  activerecord:
+    errors:
+      messages:
+        inclusion: "não está incluso na lista"
+        exclusion: "não está disponível"
+        invalid: "não é válido"
+        confirmation: "não é igual à sua confirmação"
+        accepted: "deve ser aceito"
+        empty: "não pode ficar vazio"
+        blank: "Campo obrigatório"
+        too_long: "é muito longo (máximo: {{count}} caracteres)"
+        too_short: "é muito curto (mínimo: {{count}} caracteres)"
+        wrong_length: "não possui o tamanho esperado ({{count}} caracteres)"
+        taken: "já existe"
+        not_a_number: "não é um número"
+        greater_than: "deve ser maior que {{count}}"
+        greater_than_or_equal_to: "deve ser maior ou igual a {{count}}"
+        equal_to: "deve ser igual a {{count}}"
+        less_than: "deve ser menor que {{count}}"
+        less_than_or_equal_to: "deve ser menor ou igual a {{count}}"
+        odd: "deve ser ímpar"
+        even: "deve ser par"
+        record_invalid: "Validação falhou: {{errors}}"
+        'already confirmed': "já está confirmado"
+        'not found': "não encontrado"
+
+        invalid_date: "não é uma data válida"
+        invalid_time: "não é um horário válido"
+        invalid_datetime: "não é uma data/horário válido"
+        before: "deve ser antes de {{restriction}}"
+        on_or_before: "deve ser em ou antes de {{restriction}}"
+        after: "deve ser após {{restriction}}"
+        on_or_after: "deve ser em ou após {{restriction}}"
+        between: "deve ser entre {{earliest}} e {{latest}}"
+

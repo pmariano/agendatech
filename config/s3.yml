@@ -1,0 +1,15 @@
+development:
+  bucket: myappdevelopment
+  access_key_id: <your key>
+  secret_access_key: <your key>
+
+test:
+  bucket: myapptest
+  access_key_id: <your key>
+  secret_access_key: <your key>
+
+production:
+  bucket: agendatech_logos
+  access_key_id: ENV['S3_KEY']
+  secret_access_key: ENV['S3_SECRET']
+

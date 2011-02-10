@@ -1,53 +1,60 @@
-<% if evento.ta_rolando? %>
-	<div class="evento_destaque clearfix" id="<%=evento.id%>">
-		<div class="data">
-			<p><%= Date.today.day %></p>
-			<small><%= l(Date.today, :format => :month) %></small>
-		</div>
+<div class="evento clearfix" id="evento_<%= evento.id %>">
 
-		<div class="logo clearfix"> <%= image_tag evento.logo.url(:thumb) if evento.logo? %></div>
+  <div class="data">
+    <%if evento.ta_rolando? %>
+      <p><%= Date.today.day %></p>
+      <small><%= l(Date.today, :format => :month) %></small>
+    <%else%>
+      <p><%= evento.data.day %></p>
+      <small><%= l(evento.data, :format => :month) %></small>			
+    <%end%>
+  </div><!-- fim class="data" -->
 
-		<div class="info">
-			<p id="evento"><%= link_to evento.nome, evento_full_path(evento) %></p>
-			<small><%= nome_do_estado evento.estado %></small><br/>
-
-			<p class="tags">
-				<% evento.tags.each do |tag| %>
-					<%= link_to tag.name, { :action => :tag, :id => tag.name }, :class => "tag tags" %>
-				<% end %>
-			</p>
-
-			<p class="info_button"><%= link_to '+ Informações', evento_full_path(evento) %></p>
-		</div>
-
-
-
-		<div id="twitter_images" style="display:none">
-		</div>
-	</div>
-<% else %>
-	<div class="evento clearfix">
-		<div class="data">
-			<p><%= evento.data.day %></p>
-			<small><%= l(evento.data, :format => :month) %></small>
-		</div>
-
-		<div class="logo clearfix"> <%= image_tag evento.logo.url(:thumb) if evento.logo? %></div>
-
-		<div class="info">
-			<p id="evento"><%= link_to evento.nome, evento_full_path(evento) %></p>
-			<small><%= nome_do_estado evento.estado %></small><br/>
-
-			<p class="tags">
-				<% evento.tags.each do |tag| %>
-					<%= link_to tag.name, { :action => :tag, :id => tag.name }, :class => "tag tags" %>
-				<% end %>
-			</p>
-
-			<p class="info_button"><%= link_to '+ Informações', evento_full_path(evento) %></p>
-		</div>
-	</div>
-
-
+  <% if evento.logo? %>
+    <div class="logo_img clearfix">
+    <%= image_tag evento.logo.url(:thumb) %> 
+    </div>
+  <% else %>  
+  <div class="logo clearfix">  </div>
 <% end %>
 
+  <div class="info">
+    <p id="evento"><%= link_to evento.nome, evento_full_path(evento) %></p>
+    <small><%= nome_do_estado evento.estado %></small><br/>
+
+    <p class="tags">
+    <% evento.tags.each do |tag| %>
+      <%= link_to tag.name, { :action => :tag, :id => tag.name }, :class => "tag tags" %>
+    <% end %>
+    </p>
+    <br/>
+
+    <div class="separador"></div>
+
+    <div class="quem_vai" id="quem_vai_<%= evento.id %>">
+      <div class="quem_vai_pics">
+        <div class="spinner">
+          <%= image_tag 'ajax-loader.gif' %>
+        </div>
+        <%= render :partial => 'eu_vou_gadget', :locals => { :pessoas_que_vao =>  evento.me_da_gadgets.eu_vou} %>          
+      </div>
+    </div>
+    <%= eu_vou evento %>
+    <%= render 'shared/tweet_button', :text => "#{evento.nome} #agendatech", :url => evento_full_url(evento), :twitter => evento.twitter %>  </div>
+  
+  <div class="comments">
+    <%= link_to "#{evento.comentarios.size} comentarios", evento_full_path(evento) %> 
+  </div
+
+  <!-- ideia: badges! melhorar-->
+  <% if evento.id == 210 %>
+    <div class="badges">
+      <%= link_to (image_tag "call4paperz.png", :size => '25x25'), "http://call4paperz.com/events/6" %>
+    </div>
+  <%end%>
+  <% if evento.id == 212 %>
+    <div class="badges">
+      <%= link_to (image_tag "call4paperz.png", :size => '25x25'), "http://call4paperz.com/events/8" %>
+    </div>
+  <%end%>  
+</div>

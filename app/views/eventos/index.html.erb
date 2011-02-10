@@ -1,32 +1,8 @@
-<!-- <div id="banner">
-	<a href="http://qcon.com.br/"><img src="/images/banner_qcon.png" /></a>
-</div> -->
-
-<br/>
-<p class="breadcrumb"><b>agendatech</b> &gt; Brasil   </p>
-
-<% if flash[:aguarde] %>
-	<p class="notice"><%=flash[:aguarde]%></p>
-<% end  %>
 
 
 <% for evento in @eventos %>
   <%= render evento %>
 <% end -%>
 
-<%content_for :javascript do %>
-  <%= javascript_include_tag "jquery-1.4.2.min.js","jquery.async.js" %>
-  <script>
-		jQuery.whileAsync({
-	        delay: 60000,
-	        bulk: 0,
-	        loop: function(){
-                $('div[id=twitter_images]').each(function(index,div){
-                    $.get("/eventos/twits/"+$(this).parent().attr('id'),function(htmlDosTwits){
-                     $(div).html(htmlDosTwits).fadeIn("slow");
-                    });
-                });
-	        }
-		});
-  </script>
-<%end%>
+<%= render :partial => 'eventoajax' %>
+

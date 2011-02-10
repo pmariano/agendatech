@@ -1,15 +1,29 @@
 source :rubygems
-gem "rails"            , "2.3.8"
-gem "mysql"
+gem "mysql2"
+gem 'rails', '3.0.3'
 gem "paperclip"
-gem "twitter"          , "0.9.8"
-gem "devise"           , "1.0.8"
+gem "twitter"
+gem "devise"
 gem "icalendar"        , "1.1.5"
-gem "friendly_id"      , "3.1.6"
+gem "friendly_id"      , "3.2.0.beta1"
+gem 'shorturl'         , "0.8.8"   
+gem 'validates_timeliness', '~> 3.0.2'
+gem "omniauth"
+gem "aws-s3"
+
+group :production do
+end
+
+group :development do
+  gem 'rspec'            
+  gem 'rspec-rails'      , '>=2.0.1'
+  gem 'remarkable'       , '3.1.13'  , :require => false
+  gem 'remarkable_rails' , '3.1.13'  , :require => false
+end
 
 group :test do
-  gem 'rspec'            , '1.3.0'
-  gem 'rspec-rails'
+  gem 'rspec'            
+  gem 'rspec-rails'      , '>=2.0.1'
   gem 'remarkable'       , '3.1.13'  , :require => false
   gem 'remarkable_rails' , '3.1.13'  , :require => false
 end

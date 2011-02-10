@@ -4,9 +4,15 @@ log/test.log
 tmp
 log/cucumber.log
 public/system/logos
+public/images/twimages
 *~
 *.sw?
 .bundle/config
 .rvmrc
+<<<<<<< HEAD
 .idea/*
 Gemfile.lock
+=======
+.DS_Store
+public/images/twimages/*
+>>>>>>> 2cf35f99b196caa4b86df82338ac4f1964096620

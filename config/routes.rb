@@ -1,31 +1,43 @@
-ActionController::Base.resources_path_names = { :new => 'novo', :edit => 'editar' }
-ActionController::Routing::Routes.draw do |map|
+Agendatech::Application.routes.draw do
+  resources :authentications
 
-  map.devise_for :admins
+  devise_for :users
 
-  map.namespace :admin, :path_prefix => 'admin' do |admin|
-    admin.root :controller => 'admin'
-    # TODO Arrumar os metodos HTTP
-    admin.resources :eventos, :only => [:index], :member => {:aprovar => :get, :remover => :get}
-    admin.resources :grupos, :only => [:index, :destroy], :member => {:aprovar => :put}
+  devise_for :admins
+  namespace :admin do 
+    root :to => 'admin#index'
+    resources :eventos, :only => [:index,:update] do
+      member do
+        get 'aprovar'
+        get 'remover' 
+      end
+    end
+    resources :grupos, :only => [:index,:update,:destroy] do 
+      member do
+        put 'aprovar'
+      end
+    end
   end
 
-	map.feed 'rss/feed.:format', :controller => 'rss', :action => 'feed'
-  map.root :controller => "eventos"
-  map.resources :eventos
-  map.calendario 'calendario/eventos', :controller => 'calendario', :action => 'index'
-  map.calendario_por_estado 'calendario/eventos/:estado', :controller => 'calendario', :action => 'index'
-  map.resources :grupos, :only => [:index, :new, :create]
-
-  map.colaboradores 'colaboradores', :controller => "sobre", :action => "colaboradores"
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
-
-  #coloquei por ultimo para ter prioridade mais baixa...
-  map.evento 'eventos/tecnologia/:ano/:id', :controller => 'eventos', :action => 'show'
-  map.grupo 'grupos/:nome/:id/eventos', :controller => 'grupos', :action => 'show'
-
-  map.eventos_por_estado 'busca/eventos/:estado', :controller => 'eventos', :action => 'index'
-  map.eventos_por_mes 'busca/eventos/:ano/:month', :controller => 'eventos', :action => 'index'
+  match '/auth/:provider/callback' => 'authentications#create'
+  match 'gadgets/:evento/:tipo' => 'gadgets#create', :as => :gadgets
+  match 'rss/feed.:format' => 'rss#feed', :as => :feed
+  match '/' => 'eventos#index'
+  resources :eventos, :path_names => {:new => 'novo', :edit => 'editar'}
+  root :to => 'eventos#index'
+  resources :comentarios
+  match 'calendario/eventos' => 'calendario#index', :as => :calendario
+  match 'calendario/eventos/:estado' => 'calendario#index', :as => :calendario_por_estado
+  resources :grupos
+  match 'colaboradores' => 'sobre#colaboradores', :as => :colaboradores
+  match 'contato' => 'notifier#index', :as => :contato
+  match 'sobre' => 'sobre#index', :as => :sobre
+  match 'calendario' => 'calendario#links', :as => :calendario_link
+  match '/:controller(/:action(/:id))'
+  match 'eventos/tecnologia/:ano/:id' => 'eventos#show', :as => :evento
+  match 'grupos/:nome/:id/eventos' => 'grupos#show', :as => :grupo
+  match 'busca/eventos/:estado' => 'eventos#index', :as => :eventos_por_estado
+  match 'busca/eventos/:ano/:month' => 'eventos#index', :as => :eventos_por_mes
+  match 'eventos/lista/:evento_name' => 'eventos#lista' 
 end
 

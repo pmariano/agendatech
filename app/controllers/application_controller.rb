@@ -4,7 +4,7 @@
 class ApplicationController < ActionController::Base
 
   helper :all # include all helpers, all the time
-  protect_from_forgery # See ActionController::RequestForgeryProtection for details
+  #protect_from_forgery # See ActionController::RequestForgeryProtection for details
   before_filter :tag_cloud, :twitter_search
   helper_method :meses, :numero_do_mes, :estados, :nome_do_estado
 
@@ -72,19 +72,29 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
   private
   def tag_cloud
-     @tags = Evento.tag_counts
+#     @tags = Evento.tag_counts
+    #mangue temporario enquanto nao descobrimos o bug do acts_as_taggable_on_steroids
+     @tags = Tag.select("#{Tag.table_name}.id, #{Tag.table_name}.name, COUNT(*) AS count").
+                 joins(:taggings).
+                 joins("INNER JOIN #{Evento.table_name} ON #{Evento.table_name}.id = #{Tagging.table_name}.taggable_id").where("#{Tagging.table_name}.taggable_type = 'Evento'").
+                 group("#{Tag.table_name}.id").group("#{Tag.table_name}.name").having("COUNT(*) > 5").all
   end
 
-  def twitter_search
-    eventos = Evento.find_by_sql("select distinct twitter_hash from eventos where aprovado = 1 order by rand() limit 3")
+  def twitter_search    
+    @ultimos_comentarios = Comentario.ultimos
+    
+    eventos = Evento.ultimos_twitados
     @twits = []
 
     eventos.each do |e|
-       Twitter::Search.new(e.twitter_hash).page(1).per_page(1).each do |r|
-         @twits << r
+       if e.twitter_hash && !e.twitter_hash == "" 
+        Twitter::Search.new.q(e.twitter_hash).page(1).per_page(1).each do |r|
+          @twits << r
+        end
        end
     end
     @twits
+    
   end
 
 
