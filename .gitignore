@@ -11,8 +11,5 @@ public/images/twimages
 .rvmrc
 <<<<<<< HEAD
 .idea/*
-Gemfile.lock
-=======
 .DS_Store
 public/images/twimages/*
->>>>>>> 2cf35f99b196caa4b86df82338ac4f1964096620
